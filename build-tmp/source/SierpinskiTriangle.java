@@ -1,3 +1,19 @@
+import processing.core.*; 
+import processing.data.*; 
+import processing.event.*; 
+import processing.opengl.*; 
+
+import java.util.HashMap; 
+import java.util.ArrayList; 
+import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.PrintWriter; 
+import java.io.InputStream; 
+import java.io.OutputStream; 
+import java.io.IOException; 
+
+public class SierpinskiTriangle extends PApplet {
+
 double a = 10;
 double[] vertices = {0, 1000, 1000, 1000, 500, 0};
 public void setup()
@@ -10,7 +26,7 @@ public void draw()
 	background(0);
 	fill(255);
 	textSize(36);
-	text("Area: " + (float)a, 0., 36.);
+	text("Area" + (float)a, 0.f, 36.f);
 	sierpinski(vertices);
 }
 public void mouseDragged()//optional
@@ -65,4 +81,13 @@ public void sierpinski(double[] vertices)
 	{
 		triangle((float)vertices[0], (float)vertices[1], (float)vertices[2], (float)vertices[3], (float)vertices[4], (float)vertices[5]);		
 	}
+}
+  static public void main(String[] passedArgs) {
+    String[] appletArgs = new String[] { "SierpinskiTriangle" };
+    if (passedArgs != null) {
+      PApplet.main(concat(appletArgs, passedArgs));
+    } else {
+      PApplet.main(appletArgs);
+    }
+  }
 }
