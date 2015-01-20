@@ -1,5 +1,5 @@
 double a = 10;
-double[] vertices = {0, 1000, 1000, 1000, 500, 0};
+double[] vertices = {0, 1024, 1024, 1024, 512, 0};
 public void setup()
 {
 	size(1024,1024);
@@ -17,17 +17,17 @@ public void mouseDragged()//optional
 {
 	if(mouseX >= 0 && mouseX < 1024 && mouseY >= 0 && mouseY < 1024)
 	{
-		if(Math.abs(mouseX -vertices[0]) < 8 && Math.abs(mouseY -vertices[1]) < 8)
+		if(Math.abs(mouseX -vertices[0])*Math.abs(mouseX -vertices[0]) +Math.abs(mouseY -vertices[1])*Math.abs(mouseY -vertices[0]) < 256)
 		{
 			vertices[0] = mouseX;
 			vertices[1] = mouseY;
 		}
-		else if(Math.abs(mouseX -vertices[2]) < 8 && Math.abs(mouseY -vertices[3]) < 8)
+		else if(Math.abs(mouseX -vertices[2])*Math.abs(mouseX -vertices[2]) +Math.abs(mouseY -vertices[3])*Math.abs(mouseY -vertices[3]) < 256)
 		{
 			vertices[2] = mouseX;
 			vertices[3] = mouseY;
 		}
-		else if(Math.abs(mouseX -vertices[4]) < 8 && Math.abs(mouseY -vertices[5]) < 8)
+		else if(Math.abs(mouseX -vertices[4])*Math.abs(mouseX -vertices[4]) +Math.abs(mouseY -vertices[5])*Math.abs(mouseY -vertices[5]) < 256)
 		{
 			vertices[4] = mouseX;
 			vertices[5] = mouseY;
@@ -38,7 +38,7 @@ public void keyPressed()
 {
 	if(key == CODED)
 	{
-		if(keyCode == UP && a <= 100000)
+		if(keyCode == UP && a <= 500000)
 		{
 			a *= sqrt(10);
 		}
