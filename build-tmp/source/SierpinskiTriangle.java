@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SierpinskiTriangle extends PApplet {
 
-double a = 10;
+int n = 5;
 double[] vertices = {0, 1024, 1024, 1024, 512, 0};
 public void setup()
 {
@@ -26,8 +26,8 @@ public void draw()
 	background(0);
 	fill(255);
 	textSize(36);
-	text("Area: " + (float)a, 0.f, 36.f);
-	sierpinski(vertices);
+	text("Iterations: " + n, 0.f, 36.f);
+	sierpinski(vertices, n);
 }
 public void mouseDragged()//optional
 {
@@ -49,32 +49,32 @@ public void mouseDragged()//optional
 			vertices[5] = mouseY;
 		}
 	}
+
 }
 public void keyPressed()
 {
 	if(key == CODED)
 	{
-		if(keyCode == UP && a <= 500000)
+		if(keyCode == UP && n < 10)
 		{
-			a *= sqrt(10);
+			n++;
 		}
-		else if(keyCode == DOWN && a >= 0)
+		else if(keyCode == DOWN && n > 1)
 		{
-			a /= sqrt(10);
+			n--;
 		}
 	}
 }
-public void sierpinski(double[] vertices) 
+public void sierpinski(double[] vertices, int n) 
 {
-	double area = Math.abs(vertices[0]*vertices[3] +vertices[1]*vertices[4] +vertices[2]*vertices[5] -vertices[0]*vertices[5] -vertices[1]*vertices[2] -vertices[3]*vertices[4])/2;
-	if(area > a)
+	if(n > 1)
 	{
 		double[] averts = {vertices[0],		vertices[1],	(vertices[0] +vertices[2])/2,	(vertices[1] +vertices[3])/2,	(vertices[0] +vertices[4])/2,	(vertices[1] +vertices[5])/2};
-		sierpinski(averts);
+		sierpinski(averts, n -1);
 		double[] bverts = {(vertices[0] +vertices[2])/2,	(vertices[1] +vertices[3])/2,	vertices[2],	vertices[3],	(vertices[2] +vertices[4])/2,	(vertices[3] +vertices[5])/2};
-		sierpinski(bverts);
+		sierpinski(bverts, n -1);
 		double[] cverts = {(vertices[0] +vertices[4])/2,	(vertices[1] +vertices[5])/2,	(vertices[2] +vertices[4])/2,	(vertices[3] +vertices[5])/2,	vertices[4],	vertices[5]};
-		sierpinski(cverts);
+		sierpinski(cverts, n -1);
 		
 	}
 	else 
