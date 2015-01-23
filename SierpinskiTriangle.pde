@@ -57,9 +57,15 @@ public void sierpinski(double[] vertices, color[] colors, int n)
 		double[] averts = {vertices[0],		vertices[1],	(vertices[0] +vertices[2])/2,	(vertices[1] +vertices[3])/2,	(vertices[0] +vertices[4])/2,	(vertices[1] +vertices[5])/2};
 		double[] bverts = {(vertices[0] +vertices[2])/2,	(vertices[1] +vertices[3])/2,	vertices[2],	vertices[3],	(vertices[2] +vertices[4])/2,	(vertices[3] +vertices[5])/2};
 		double[] cverts = {(vertices[0] +vertices[4])/2,	(vertices[1] +vertices[5])/2,	(vertices[2] +vertices[4])/2,	(vertices[3] +vertices[5])/2,	vertices[4],	vertices[5]};
-		color[] acolors = {colors[0],					(colors[0] +colors[1])/2,	(colors[0] +colors[2])/2};
-		color[] bcolors = {(colors[0] +colors[1])/2,	colors[1],					(colors[1] +colors[2])/2};
-		color[] ccolors = {(colors[0] +colors[2])/2,	(colors[1] +colors[2])/2,	colors[2]};
+		float[] reds = {red(colors[0]), red(colors[1]), red(colors[2])};
+		float[] greens = {green(colors[0]), green(colors[1]), green(colors[2])};
+		float[] blues = {blue(colors[0]), blue(colors[1]), blue(colors[2])};
+		color aaverage = color((int)(reds[1]+reds[2])/2, (int)(greens[1]+greens[2])/2, (int)(blues[1]+blues[2])/2);
+		color baverage = color((int)(reds[0]+reds[2])/2, (int)(greens[0]+greens[2])/2, (int)(blues[0]+blues[2])/2);
+		color caverage = color((int)(reds[0]+reds[1])/2, (int)(greens[0]+greens[1])/2, (int)(blues[0]+blues[1])/2);
+		color[] acolors = {colors[0],	caverage,	baverage};
+		color[] bcolors = {caverage,	colors[1],	aaverage};
+		color[] ccolors = {baverage,	aaverage,	colors[2]};
 		sierpinski(averts, acolors, n -1);
 		sierpinski(bverts, bcolors, n -1);
 		sierpinski(cverts, ccolors, n -1);
