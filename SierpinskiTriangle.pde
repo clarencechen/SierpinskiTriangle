@@ -1,8 +1,9 @@
 int n = 5;
 double[] vertices = {0, 1024, 1024, 1024, 512, 0};
+color[] colors = {color(255, 0, 0), color(0, 255, 0), color(0, 0, 255)};
 public void setup()
 {
-	size(1024,1024);
+	size(1024,1024, P2D);
 }
 public void draw()
 {
@@ -11,7 +12,7 @@ public void draw()
 	fill(255);
 	textSize(36);
 	text("Iterations: " + n, 0., 36.);
-	sierpinski(vertices, n);
+	sierpinski(vertices, colors, n);
 }
 public void mouseDragged()//optional
 {
@@ -49,20 +50,30 @@ public void keyPressed()
 		}
 	}
 }
-public void sierpinski(double[] vertices, int n) 
+public void sierpinski(double[] vertices, color[] colors, int n) 
 {
 	if(n > 1)
 	{
 		double[] averts = {vertices[0],		vertices[1],	(vertices[0] +vertices[2])/2,	(vertices[1] +vertices[3])/2,	(vertices[0] +vertices[4])/2,	(vertices[1] +vertices[5])/2};
-		sierpinski(averts, n -1);
 		double[] bverts = {(vertices[0] +vertices[2])/2,	(vertices[1] +vertices[3])/2,	vertices[2],	vertices[3],	(vertices[2] +vertices[4])/2,	(vertices[3] +vertices[5])/2};
-		sierpinski(bverts, n -1);
 		double[] cverts = {(vertices[0] +vertices[4])/2,	(vertices[1] +vertices[5])/2,	(vertices[2] +vertices[4])/2,	(vertices[3] +vertices[5])/2,	vertices[4],	vertices[5]};
-		sierpinski(cverts, n -1);
+		color[] acolors = {colors[0],					(colors[0] +colors[1])/2,	(colors[0] +colors[2])/2};
+		color[] bcolors = {(colors[0] +colors[1])/2,	colors[1],					(colors[1] +colors[2])/2};
+		color[] ccolors = {(colors[0] +colors[2])/2,	(colors[1] +colors[2])/2,	colors[2]};
+		sierpinski(averts, acolors, n -1);
+		sierpinski(bverts, bcolors, n -1);
+		sierpinski(cverts, ccolors, n -1);
 		
 	}
 	else 
 	{
-		triangle((float)vertices[0], (float)vertices[1], (float)vertices[2], (float)vertices[3], (float)vertices[4], (float)vertices[5]);		
+		beginShape(TRIANGLES);
+		fill(colors[0]);
+		vertex((float)vertices[0], (float)vertices[1]);
+		fill(colors[1]);
+		vertex((float)vertices[2], (float)vertices[3]);
+		fill(colors[2]);
+		vertex((float)vertices[4], (float)vertices[5]);
+		endShape();
 	}
 }
